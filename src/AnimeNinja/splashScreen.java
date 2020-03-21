@@ -28,14 +28,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileSystemView;
 
 public class splashScreen {
-	
+
 	private static boolean finished = false;
 	protected void loadingScreen()
 	{
 		JWindow window = new JWindow();
     	JLabel loadingLabel = new JLabel(new ImageIcon(splashScreen.class.getResource("/loading.gif")));
     	window.getContentPane().add(loadingLabel);
-    	window.setSize(403, 44);
+    	window.setSize(399, 41);
     	window.setLocationRelativeTo(null);
     	window.setVisible(true);
     	try {
@@ -51,12 +51,12 @@ public class splashScreen {
     	window.setSize(220, 220);
     	window.setLocationRelativeTo(null);
     	window.setLocation(window.getX()+110, window.getY());
-    	
+
     	JWindow window2 = new JWindow();
     	window2.getContentPane().add(imgLabel2);
     	window2.setSize(220, 220);
     	window2.setLocation(window.getX()-220, window.getY());
-    	
+
     	window.setVisible(true);
     	window2.setVisible(true);
     	try {
@@ -66,7 +66,7 @@ public class splashScreen {
     	    Thread.sleep(500);
     	} catch (InterruptedException e) {
     	}
-    	
+
     	window.setSize(527, 315);
     	window.setLocationRelativeTo(null);
     	imgLabel.setIcon(new ImageIcon(splashScreen.class.getResource("/logo.png")));
@@ -82,7 +82,7 @@ public class splashScreen {
 			e.printStackTrace();
 		}
 	}
-	
+
 	protected void downloadLocation()
 	{
 		try {
@@ -91,7 +91,7 @@ public class splashScreen {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		
+
 		JDialog dialog = new JDialog();
 		dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		JPanel contentPanel = new JPanel();
@@ -103,18 +103,18 @@ public class splashScreen {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		dialog.getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
+
 		dirTextField = new JTextField();
 		dirTextField.setBounds(109, 14, 238, 20);
 		contentPanel.add(dirTextField);
 		dirTextField.setColumns(10);
-		
+
 		JLabel lblDownloadDirectory = new JLabel("Download Directory");
 		lblDownloadDirectory.setBounds(10, 17, 94, 14);
 		contentPanel.add(lblDownloadDirectory);
-		
+
 		JButton btnBrowse = new JButton("Browse");
-		
+
 		File downloadLog = new File(System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\Download Location.txt");
 		if(!downloadLog.exists())
 		{
@@ -140,7 +140,7 @@ public class splashScreen {
 		btnBrowse.setBounds(357, 13, 72, 21);
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath(), FileSystemView.getFileSystemView()); 
+				JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath(), FileSystemView.getFileSystemView());
 				chooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
 				chooser.showSaveDialog(null);
 				try {
@@ -172,7 +172,7 @@ public class splashScreen {
 		    	dialog.dispose();
 		    }
 		});
-		
+
 		while(!finished)
 		{
 			try {
