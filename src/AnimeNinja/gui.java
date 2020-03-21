@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 import java.awt.Toolkit;
 
 public class gui extends JFrame {
-	
+
 	TextField searchTextField = new TextField();
 	JLabel imgLabel = new JLabel();
 	JLabel lblNewLabel_6 = new JLabel("Similar Results");
@@ -29,14 +29,14 @@ public class gui extends JFrame {
 	JComboBox similarComboBox = new JComboBox();
 	DefaultComboBoxModel clearModel;
 	JComboBox comboBox,comboBox_2,startComboBox,endComboBox,epComboBox;
-	
+
 	private JProgressBar progressBar = new JProgressBar();
 	private   static JPanel contentPane;
 	protected static JLabel lblNewLabel_3;
 	protected static JLabel lblNewLabel_5;
 	protected static JLabel lblNewLabel_7;
 	protected static int selectedEpisode;
-	
+
 	private void search() {
 		boolean exists = scraper.search(searchTextField.getText());
 		if(exists)
@@ -75,7 +75,7 @@ public class gui extends JFrame {
 			 JOptionPane.showMessageDialog(null, "No result found\nPlease check your spelling", "Anime Ninja V1.0", JOptionPane.INFORMATION_MESSAGE);
 		 }
 	}
-	
+
 	private void seasonSelect() {
 		int selectedSeason = comboBox.getSelectedIndex()-1;
 		try {
@@ -92,13 +92,13 @@ public class gui extends JFrame {
 				imgLabel.setIcon(img);
 				scraper.selectSeason(selectedSeason);
 			}
-			
+
 			ArrayList<String> episodeNames = scraper.getEpisodes();
 			DefaultComboBoxModel<String> second_model2 = new DefaultComboBoxModel<String>
 			(episodeNames.toArray((new String[0])));
 			 epComboBox.setModel(clearModel);
 			 epComboBox.setModel(second_model2);
-			 
+
 			 DefaultComboBoxModel<String> startModel = new DefaultComboBoxModel<String>(episodeNames.toArray((new String[0])));
 			 DefaultComboBoxModel<String> endModel = new DefaultComboBoxModel<String>(episodeNames.toArray((new String[0])));
 			 startComboBox.setModel(startModel);
@@ -113,7 +113,7 @@ public class gui extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void similarSelect() {
 		int selectedSimilar = comboBox_2.getSelectedIndex()-1;
 		ImageIcon img = null;
@@ -126,7 +126,7 @@ public class gui extends JFrame {
 		(episodeNames.toArray((new String[0])));
 		 epComboBox.setModel(clearModel);
 		 epComboBox.setModel(second_model2);
-		 
+
 		 DefaultComboBoxModel<String> startModel = new DefaultComboBoxModel<String>(episodeNames.toArray((new String[0])));
 		 DefaultComboBoxModel<String> endModel = new DefaultComboBoxModel<String>(episodeNames.toArray((new String[0])));
 		 startComboBox.setModel(startModel);
@@ -138,7 +138,7 @@ public class gui extends JFrame {
 		 startComboBox.setVisible(true);
 		 endComboBox.setVisible(true);
 	}
-	
+
 	public gui() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/appIcon.png")));
 		setBackground(Color.DARK_GRAY);
@@ -168,7 +168,7 @@ public class gui extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("Anime Name");
 		lblNewLabel.setForeground(Color.RED);
 		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
@@ -180,49 +180,54 @@ public class gui extends JFrame {
 		seasonComboBox.setFont(new Font("Tahoma", Font.BOLD, 10));
 		seasonComboBox.setBounds(12, 186, 173, 22);
 		contentPane.add(seasonComboBox);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Season");
 		lblNewLabel_1.setForeground(Color.RED);
 		lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblNewLabel_1.setBounds(27, 146, 89, 31);
 		contentPane.add(lblNewLabel_1);
-		
+
 		epComboBox = new JComboBox();
 		epComboBox.setModel(clearModel);
 		epComboBox.setBounds(12, 283, 113, 22);
 		contentPane.add(epComboBox);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("Episode");
 		lblNewLabel_2.setForeground(Color.RED);
 		lblNewLabel_2.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblNewLabel_2.setBounds(27, 246, 81, 29);
 		contentPane.add(lblNewLabel_2);
-		
+
 		searchTextField.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
 		searchTextField.setForeground(Color.BLACK);
 		searchTextField.setBounds(12, 100, 148, 22);
 		contentPane.add(searchTextField);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(Color.WHITE);
 		menuBar.setBounds(0, 0, 681, 23);
 		contentPane.add(menuBar);
-		
+
 		JMenu mnNewMenu = new JMenu("Options");
 		mnNewMenu.setHorizontalAlignment(SwingConstants.RIGHT);
 		mnNewMenu.setFont(new Font("Tahoma", Font.BOLD, 15));
 		menuBar.add(mnNewMenu);
-		
+
 		JMenuItem mntmNewMenuItem = new JMenuItem("Check for updates");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI("https://github.com/khalidwaleed0/Anime_Ninja/releases"));
+				} catch (IOException | URISyntaxException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		mntmNewMenuItem.setHorizontalAlignment(SwingConstants.LEFT);
-		
+
 		mntmNewMenuItem.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mnNewMenu.add(mntmNewMenuItem);
-		
+
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Contact us");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -232,18 +237,18 @@ public class gui extends JFrame {
 		});
 		mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
 		mnNewMenu.add(mntmNewMenuItem_1);
-		
+
 		JButton btnDownload = new JButton("Download" );
 		btnDownload.setFont(new Font("SansSerif", Font.BOLD, 19));
 		btnDownload.setBounds(234, 345, 128, 39);
-		
+
 		contentPane.add(btnDownload);
 		JButton btnSearch = new JButton(new ImageIcon(gui.class.getResource("/searchIcon.jpg")));
 		btnSearch.setBounds(166, 100, 19, 22);
-		
+
 		imgLabel.setBounds(444, 50, 207, 265);
 		contentPane.add(imgLabel);
-		
+
 		lblNewLabel_6.setForeground(Color.RED);
 		lblNewLabel_6.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblNewLabel_6.setBounds(200, 147, 162, 29);
@@ -253,7 +258,7 @@ public class gui extends JFrame {
 		similarComboBox.setBounds(200, 186, 189, 22);
 		similarComboBox.setVisible(false);
 		contentPane.add(similarComboBox);
-		
+
 		startComboBox = new JComboBox();
 		startComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -262,7 +267,7 @@ public class gui extends JFrame {
 		});
 		startComboBox.setBounds(465, 395, 81, 22);
 		contentPane.add(startComboBox);
-		
+
 		endComboBox = new JComboBox();
 		endComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -271,12 +276,12 @@ public class gui extends JFrame {
 		});
 		endComboBox.setBounds(570, 395, 81, 22);
 		contentPane.add(endComboBox);
-		
+
 		progressBar.setForeground(Color.GREEN);
 		progressBar.setEnabled(false);
 		progressBar.setBounds(0, 22, 681, 13);
 		contentPane.add(progressBar);
-		
+
 		contentPane.add(btnSearch);
 		searchTextField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -291,9 +296,9 @@ public class gui extends JFrame {
 				ld.execute();
 			}
 		});
-		
+
 		seasonComboBox.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				comboBox =  (JComboBox) event.getSource();
@@ -304,9 +309,9 @@ public class gui extends JFrame {
 				}
 			}
 		});
-		
+
 		similarComboBox.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				comboBox_2 =  (JComboBox) event.getSource();
@@ -317,28 +322,28 @@ public class gui extends JFrame {
 				}
 			}
 		});
-		
+
 		lblNewLabel_3 = new JLabel((String) null);
 		lblNewLabel_3.setForeground(Color.WHITE);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_3.setBounds(12, 405, 287, 31);
 		contentPane.add(lblNewLabel_3);
-		
+
 		epComboBox.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				
+
 				JComboBox comboBox_1 =  (JComboBox) event.getSource();
 			}
 		});
-		
+
 		lblNewLabel_5 = new JLabel("Files left");
 		lblNewLabel_5.setForeground(Color.WHITE);
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_5.setBounds(556, 450, 113, 20);
 		contentPane.add(lblNewLabel_5);
-		
+
 		JButton btnDonate = new JButton("Donate");
 		btnDonate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -352,15 +357,15 @@ public class gui extends JFrame {
 		btnDonate.setFont(new Font("SansSerif", Font.BOLD, 19));
 		btnDonate.setBounds(12, 345, 128, 39);
 		contentPane.add(btnDonate);
-		
+
 		JButton btnDownloadAllEpisodes = new JButton("Download All Episodes");
 		btnDownloadAllEpisodes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {
 				loading ld4 = new loading(4);
 				ld4.execute();
 				Pattern pat1 = Pattern.compile("(https:\\/\\/mega\\S+)");
 				Pattern pat2 = Pattern.compile("(https:\\/\\/drive\\S+)");
-				Matcher mat1 = null,mat2=null;	
+				Matcher mat1 = null,mat2=null;
 				for(int i=startComboBox.getSelectedIndex()-1 ; i < endComboBox.getSelectedIndex() ; i++)
 				{
 					mat1 = pat1.matcher(scraper.episodes.get(i).getAttribute("data-links"));
@@ -375,25 +380,25 @@ public class gui extends JFrame {
 		btnDownloadAllEpisodes.setFont(new Font("SansSerif", Font.BOLD, 15));
 		btnDownloadAllEpisodes.setBounds(444, 345, 207, 39);
 		contentPane.add(btnDownloadAllEpisodes);
-		
+
 		lblNewLabel_7 = new JLabel("Download Info");
 		lblNewLabel_7.setForeground(Color.WHITE);
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_7.setBounds(12, 445, 287, 31);
 		contentPane.add(lblNewLabel_7);
-		
+
 		JLabel lblFrom = new JLabel("From");
 		lblFrom.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblFrom.setForeground(Color.WHITE);
 		lblFrom.setBounds(432, 398, 37, 14);
 		contentPane.add(lblFrom);
-		
+
 		JLabel lblTo = new JLabel("To");
 		lblTo.setForeground(Color.WHITE);
 		lblTo.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblTo.setBounds(550, 398, 19, 14);
 		contentPane.add(lblTo);
-		
+
 		btnDownload.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -413,7 +418,7 @@ public class gui extends JFrame {
 			}
 		});
 		}
-	
+
 	private class loading extends SwingWorker<Void,Void>{
 		int opNumber;
 		public loading(int opNumber) {
