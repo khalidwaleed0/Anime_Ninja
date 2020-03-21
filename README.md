@@ -6,6 +6,7 @@
 
 ### How to install :
 ####  Easy Way :
+ * Download the exe file from here [Anime Ninja](https://github.com/khalidwaleed0/Anime_Ninja/releases)
  * When you download the exe file there is no installation needed.
 ####  Hard Way :
  * If you want to run the code on and IDE or make your own jar file, you should :
