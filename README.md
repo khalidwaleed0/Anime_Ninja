@@ -1,7 +1,7 @@
 # Anime_Ninja
  A program to download anime episodes with one click(with arabic subtitles).
 ### Requirements :
- 1- Operating System : Windows only.\n
+ 1- Operating System : Windows only. <br/>
  2- Google chrome must be installed.
 
 ### How to install :
