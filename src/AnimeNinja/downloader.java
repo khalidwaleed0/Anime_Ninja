@@ -25,7 +25,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
 
 public class downloader implements Runnable{
-	
+
 	private static WebDriver driver2;
 	private static HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 	protected static ArrayList<String> megaLinks = new ArrayList<String>();
@@ -36,15 +36,15 @@ public class downloader implements Runnable{
 	{
 		setup();
 		showTrayIcon();
-		megaDownloader();		
+		megaDownloader();
 	}
-	
+
 	private WebElement expandRootElement(WebElement element) {
 		WebElement ele = (WebElement) ((JavascriptExecutor) driver2)
 .executeScript("return arguments[0].shadowRoot",element);
 		return ele;
 	}
-	
+
 	private void driveDownloader()
 	{
 		if(driveLinks.size() != 0)
@@ -61,7 +61,7 @@ public class downloader implements Runnable{
 					driveLinks.remove(0);
 				}
 			}catch(Exception e) {
-				
+
 			}
 			driver2.get("chrome://downloads");
 			WebElement root1 = driver2.findElement(By.tagName("downloads-manager"));
@@ -72,13 +72,14 @@ public class downloader implements Runnable{
 			gui.lblNewLabel_3.setVisible(false);
 			gui.lblNewLabel_3.setText(epName);
 			gui.lblNewLabel_3.setVisible(true);
-			gui.lblNewLabel_5.setText("Files left:"+megaLinks.size());
+
 			while(true)
 			{
 				String downloadInfo = shadowRoot2.findElement(By.id("description")).getText();
 				if (!downloadInfo.isEmpty())
 				{
 					gui.lblNewLabel_7.setText(downloadInfo);
+					gui.lblNewLabel_5.setText("Files left:"+megaLinks.size());
 					guiRefresh();
 				}
 				else
@@ -90,7 +91,7 @@ public class downloader implements Runnable{
 			}
 		}
 	}
-	
+
 	private void megaDownloader()
 	{
 		String epName = "";
@@ -100,7 +101,7 @@ public class downloader implements Runnable{
 			{
 			    driver2.get(megaLinks.get(0));
 				megaLinks.remove(0);
-				gui.lblNewLabel_5.setText("Files left: "+megaLinks.size());
+
 			    try {
 			    	WebDriverWait wait = new WebDriverWait(driver2, 15);
 					wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("loading")));
@@ -131,6 +132,7 @@ public class downloader implements Runnable{
 							gui.lblNewLabel_3.setText("epName : "+epName);
 							gui.lblNewLabel_3.setVisible(true);
 							gui.lblNewLabel_7.setText(speedInfo+" - "+sizeInfo);
+							gui.lblNewLabel_5.setText("Files left: "+megaLinks.size());
 							guiRefresh();
 						}catch(Exception e) {
 							finishingDownload();
@@ -138,7 +140,7 @@ public class downloader implements Runnable{
 							driveLinks.remove(0);
 							break;
 						}
-						
+
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e1) {
@@ -164,13 +166,15 @@ public class downloader implements Runnable{
 			}
 		}
 	}
-	
+
 	private void guiRefresh()
 	{
 		gui.lblNewLabel_7.setVisible(false);
 		gui.lblNewLabel_7.setVisible(true);
+		gui.lblNewLabel_5.setVisible(false);
+		gui.lblNewLabel_5.setVisible(true);
 	}
-	
+
 	private void finishingDownload()
 	{
 		for(int i=15 ; i>=0 ; i--)
@@ -186,17 +190,17 @@ public class downloader implements Runnable{
 		gui.lblNewLabel_7.setText("Download Completed");
 		guiRefresh();
 	}
-	
+
 	private void notifier(String downloadState ,String epName)
 	{
 		try{
-		    
+
 		    trayIcon.displayMessage(downloadState,epName, MessageType.NONE);
 		}catch(Exception ex){
 		    ex.printStackTrace();
 		}
 	}
-	
+
 	private void showTrayIcon()
 	{
 		SystemTray tray = SystemTray.getSystemTray();
@@ -210,7 +214,7 @@ public class downloader implements Runnable{
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void setup()
 	{
 		ChromeOptions chromeOptions = new ChromeOptions();
@@ -221,11 +225,11 @@ public class downloader implements Runnable{
 	    chromeOptions.addArguments("--headless");
 	    chromeOptions.addArguments("--disable-gpu");
 	    chromeOptions.addArguments("--unlimited-storage");
-	    
+
 		driver2 = new ChromeDriver(chromeOptions);
 	    driver2.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 	}
-	
+
 	protected static void setDownloadLocation()
 	{
 		FileReader reader;
@@ -236,13 +240,13 @@ public class downloader implements Runnable{
 			defaultDir = new File(br.readLine());
 			br.close();
 			reader.close();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		chromePrefs.put("download.default_directory", defaultDir.getAbsolutePath());
 	}
-	
+
 	protected static void close()
 	{
 		driver2.close();
