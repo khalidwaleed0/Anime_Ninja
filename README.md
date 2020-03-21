@@ -13,6 +13,7 @@
    * Put chromedriver.exe in the resources.
    * add selenium libraries to the build path.
    * Choose to compile the program using jre 1.8 as for some reason it is the only version that works.
+   * Run your ide as admin so that the program runs with admin priviliges.(It is needed when the porgram checks whether or not chrome is installed and when it extracts chromedriver.exe and downloadLocation.txt in program files).
    * Class (scraper) contains some arabic string make sure your ide uses UTF-8 so that it can read it properly.
 ### How does the program work ?
  It uses selenium libraries and chromedriver to scrap the website [animesanka.net](https://www.animesanka.net).
