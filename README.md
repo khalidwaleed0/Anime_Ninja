@@ -1,5 +1,5 @@
 # Anime_Ninja
- A program to download anime episodes with one click(with arabic subtitles).
+ A program to download 1080p anime episodes with one click(with arabic subtitles).
 ### Requirements :
  1- Operating System : Windows only. <br/>
  2- Google chrome must be installed.
