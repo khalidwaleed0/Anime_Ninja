@@ -4,14 +4,12 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Image;
-
 import javax.swing.border.EmptyBorder;
 import java.awt.TextField;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.net.*;
@@ -213,8 +211,8 @@ public class gui extends JFrame {
 		mnNewMenu.setFont(new Font("Tahoma", Font.BOLD, 15));
 		menuBar.add(mnNewMenu);
 
-		JMenuItem mntmNewMenuItem = new JMenuItem("Check for updates");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
+		JMenuItem updatesItem = new JMenuItem("Check for updates");
+		updatesItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Desktop.getDesktop().browse(new URI("https://github.com/khalidwaleed0/Anime_Ninja/releases"));
@@ -223,20 +221,20 @@ public class gui extends JFrame {
 				}
 			}
 		});
-		mntmNewMenuItem.setHorizontalAlignment(SwingConstants.LEFT);
+		updatesItem.setHorizontalAlignment(SwingConstants.LEFT);
 
-		mntmNewMenuItem.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		mnNewMenu.add(mntmNewMenuItem);
+		updatesItem.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		mnNewMenu.add(updatesItem);
 
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Contact us");
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+		JMenuItem contactItem = new JMenuItem("Contact us");
+		contactItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(null, "Feel free to contact us at :\nkhalidwaleed0@outlook.com\nkemad951@gmail.com"
 						, "Contact us", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.BOLD, 15));
-		mnNewMenu.add(mntmNewMenuItem_1);
+		contactItem.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		mnNewMenu.add(contactItem);
 
 		JButton btnDownload = new JButton("Download" );
 		btnDownload.setFont(new Font("SansSerif", Font.BOLD, 19));
