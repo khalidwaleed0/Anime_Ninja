@@ -50,18 +50,18 @@ public class downloader implements Runnable{
 		if(driveLinks.size() != 0)
 		{
 			driver2.get(driveLinks.get(0));
+			driveLinks.remove(0);
 			try {
 				driver2.findElement(By.tagName("p"));
 				try {
 					driver2.findElement(By.id("uc-download-link")).click();
 				}catch(Exception e) {
 					gui.lblNewLabel_7.setText("Failed to download EP "+(gui.selectedEpisode+1)+" (Old Links)");
-					JOptionPane.showMessageDialog(null, "Failed to download Episode "+(gui.selectedEpisode+1)+"\nDownload Links are old");
 					notifier("Download Failed (Old Links)","EP "+gui.selectedEpisode+1);
 					driveLinks.remove(0);
 				}
 			}catch(Exception e) {
-
+				notifier("Download Failed (Old Links)","EP "+gui.selectedEpisode+1);
 			}
 			driver2.get("chrome://downloads");
 			WebElement root1 = driver2.findElement(By.tagName("downloads-manager"));
@@ -85,7 +85,6 @@ public class downloader implements Runnable{
 				else
 				{
 					notifier("Download Completed",epName);
-					driveLinks.remove(0);
 					break;
 				}
 			}

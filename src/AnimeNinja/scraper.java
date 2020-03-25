@@ -17,7 +17,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class scraper {
-	
+
 	private static WebDriver driver;
 	private static List <WebElement> seasons = new ArrayList<WebElement>();
 	private static List <String> seasonLinks = new ArrayList<String>();
@@ -28,7 +28,7 @@ public class scraper {
 	protected static boolean showSimilar = false;
 	protected static boolean onlyOneSimilar = false;
 	protected static List <String> similarTexts = new ArrayList<String>();
-	
+
 	protected static void setup()
 	{
 		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver79.exe");
@@ -44,13 +44,13 @@ public class scraper {
 		driver.manage().window().setSize(new Dimension(1900,980));
 	    driver.get("https://www.animesanka.net/search?q=haikyuu");
 	}
-	
+
 	protected static void close()
 	{
 		driver.close();
 		driver.quit();
 	}
-	
+
 	protected static File getPhoto(int num,boolean isSimilar)
 	{
 		if(isSimilar)
@@ -58,7 +58,7 @@ public class scraper {
 		else
 			return seasonPhotos.get(num);
 	}
-	
+
 	protected static boolean search(String animeName)			//returns whether or not anime exists
 	{
 		seasons.removeAll(seasons);
@@ -66,7 +66,7 @@ public class scraper {
 		JavascriptExecutor js1 = ((JavascriptExecutor) driver);
 		js1.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 		try {
-			Thread.sleep(500);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -76,7 +76,7 @@ public class scraper {
 		else
 			return false;
 	}
-	
+
 	private static void clearOldData()
 	{
 		seasonLinks.removeAll(seasonLinks);
@@ -85,7 +85,7 @@ public class scraper {
 		similarLinks.removeAll(similarLinks);
 		similarPhotos.removeAll(similarPhotos);
 	}
-	
+
 	protected static List<String> getSeasons()						// returns number of seasons (in order) (without ova , specials)
 	{
 		clearOldData();
@@ -123,7 +123,7 @@ public class scraper {
 	{																									// in the website
 		ArrayList<String> seasonOrder;
 		if(arabicOrder)
-			seasonOrder = new ArrayList<String>(Arrays.asList(new String[]{"الأول","الثان","الثالث","الرابع","الخامس","السادس"}));
+			seasonOrder = new ArrayList<String>(Arrays.asList(new String[]{"الموسم الأول","الموسم الثان","الموسم الثالث","الموسم الرابع","الموسم الخامس","الموسم السادس"}));
 		else
 			seasonOrder = new ArrayList<String>(Arrays.asList(new String[]{"season 1","season 2","season 3","season 4","season 5","season 6"}));
 		for(int i=0 ; i<seasons.size() ; i++)
@@ -142,7 +142,7 @@ public class scraper {
 			seasonOrder = new ArrayList<String>(Arrays.asList(new String[]{"season 1","season 2","season 3","season 4","season 5","season 6"}));
 		return seasonOrder;
 	}
-	
+
 	private static List<String> seasonReturn(ArrayList<String> seasonOrder)
 	{
 		if(seasons.size()!=0)
@@ -172,27 +172,27 @@ public class scraper {
 			else
 			{
 				JOptionPane.showMessageDialog(null, "NO Result");
-				return seasonOrder;	
+				return seasonOrder;
 			}
 		}
 	}
-	
+
 	protected static void selectSeason(int seasonNumber)
 	{
 		driver.get(seasonLinks.get(seasonNumber));
 	}
-	
+
 	protected static void selectSimilar(int num)
 	{
 		driver.get(similarLinks.get(num));
 	}
-	
+
 	protected static ArrayList<String> getEpisodes()		//returns an Array containing episode numbers
 	{
 		try {
 				driver.get(driver.findElement(By.cssSelector(".tab-content-sanka.content3-sanka .ibtn.iNor.ibtn-4")).getAttribute("href"));
 		}catch(Exception e) {
-			
+
 		}
 		ArrayList<String> episodeNumbers = new ArrayList<String>();
 		downloader.megaLinks.removeAll(downloader.megaLinks);

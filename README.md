@@ -9,7 +9,7 @@
  * Download the exe file from here [Anime Ninja](https://github.com/khalidwaleed0/Anime_Ninja/releases)
  * When you download the exe file there is no installation needed.
 ####  Hard Way :
- * If you want to run the code on and IDE or make your own jar file, you should :
+ * If you want to run the code on your IDE or make your own jar file, you should :
    * Put chromedriver.exe in the resources.
    * add selenium libraries to the build path.
    * Choose to compile the program using jre 1.8 as for some reason it is the only version that works.
