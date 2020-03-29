@@ -118,10 +118,17 @@ public class scraper {
 		ArrayList<String> seasonOrder = orderArrange(isArabicOrder,seasonNames);
 		return seasonReturn(seasonOrder);
 	}
-
+	
+	private static void getLinkandPhoto(int j)
+	{
+		seasonLinks.add(seasons.get(j).findElement(By.className("RecentThumb")).getAttribute("href"));
+		seasonPhotos.add(seasons.get(j).findElement(By.className("RecentThumb")).getScreenshotAs(OutputType.FILE));
+	}
+	
 	private static ArrayList<String> orderArrange(Boolean arabicOrder,List<String> seasonNames)			// puts seasons in order because they are not ordered
 	{																									// in the website
 		ArrayList<String> seasonOrder;
+		ArrayList<String> orderedSeasonNames = new ArrayList<String>();
 		if(arabicOrder)
 			seasonOrder = new ArrayList<String>(Arrays.asList(new String[]{"الموسم الأول","الموسم الثان","الموسم الثالث","الموسم الرابع","الموسم الخامس","الموسم السادس"}));
 		else
@@ -132,18 +139,29 @@ public class scraper {
 			{
 				if(seasonNames.get(j).toLowerCase().contains(seasonOrder.get(i)))
 				{
-					seasonLinks.add(seasons.get(j).findElement(By.className("RecentThumb")).getAttribute("href"));
-					seasonPhotos.add(seasons.get(j).findElement(By.className("RecentThumb")).getScreenshotAs(OutputType.FILE));
+					if(seasonNames.get(j).contains("الجزء الأول") || seasonNames.get(j).toLowerCase().contains("part 1"))
+					{
+						orderedSeasonNames.add("Season "+(i+1)+" Part 1");
+						getLinkandPhoto(j);
+						continue;
+					}
+					else if(seasonNames.get(j).contains("الجزء الثان") || seasonNames.get(j).toLowerCase().contains("part 2"))
+					{
+						orderedSeasonNames.add("Season "+(i+1)+" Part 2");
+						getLinkandPhoto(j);
+						continue;
+					}
+					else
+						orderedSeasonNames.add("Season "+(i+1));
+					getLinkandPhoto(j);
 					break;
 				}
 			}
 		}
-		if(arabicOrder)
-			seasonOrder = new ArrayList<String>(Arrays.asList(new String[]{"season 1","season 2","season 3","season 4","season 5","season 6"}));
-		return seasonOrder;
+		return orderedSeasonNames;
 	}
 
-	private static List<String> seasonReturn(ArrayList<String> seasonOrder)
+	private static List<String> seasonReturn(ArrayList<String> orderedSeasonNames)
 	{
 		if(seasons.size()!=0)
 		{
@@ -152,8 +170,8 @@ public class scraper {
 				similarTexts.add(0, "Choose");
 				showSimilar = true;
 			}
-			seasonOrder.add(0,"Choose");
-			return seasonOrder.subList(0, seasonLinks.size()+1);
+			orderedSeasonNames.add(0,"Choose");
+			return orderedSeasonNames;
 		}
 		else
 		{
@@ -167,12 +185,12 @@ public class scraper {
 			{
 				similarTexts.add(0, "Choose");
 				showSimilar = true;
-				return seasonOrder;
+				return orderedSeasonNames;
 			}
 			else
 			{
 				JOptionPane.showMessageDialog(null, "NO Result");
-				return seasonOrder;
+				return orderedSeasonNames;
 			}
 		}
 	}

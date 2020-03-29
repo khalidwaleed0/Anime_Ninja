@@ -117,7 +117,6 @@ public class gui extends JFrame {
 		ImageIcon img = null;
 		img = new ImageIcon(scraper.getPhoto(selectedSimilar, true).getPath());
 		imgLabel.setIcon(img);
-		scraper.selectSeason(selectedSimilar);
 		scraper.selectSimilar(selectedSimilar);
 		ArrayList<String> episodeNames = scraper.getEpisodes();
 		DefaultComboBoxModel<String> second_model2 = new DefaultComboBoxModel<String>
@@ -136,11 +135,11 @@ public class gui extends JFrame {
 		 startComboBox.setVisible(true);
 		 endComboBox.setVisible(true);
 	}
-
+	
 	public gui() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/appIcon.png")));
 		setBackground(Color.DARK_GRAY);
-		setTitle("Anime Ninja V1.0");
+		setTitle("Anime Ninja V1.1");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener((WindowListener) new WindowAdapter()
@@ -206,16 +205,16 @@ public class gui extends JFrame {
 		menuBar.setBounds(0, 0, 681, 23);
 		contentPane.add(menuBar);
 
-		JMenu mnNewMenu = new JMenu("Options");
+		JMenu mnNewMenu = new JMenu("About");
 		mnNewMenu.setHorizontalAlignment(SwingConstants.RIGHT);
-		mnNewMenu.setFont(new Font("Tahoma", Font.BOLD, 15));
+		mnNewMenu.setFont(new Font("Tahoma", Font.BOLD, 14));
 		menuBar.add(mnNewMenu);
 
-		JMenuItem updatesItem = new JMenuItem("Check for updates");
+		JMenuItem updatesItem = new JMenuItem("Github Project");
 		updatesItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Desktop.getDesktop().browse(new URI("https://github.com/khalidwaleed0/Anime_Ninja/releases"));
+					Desktop.getDesktop().browse(new URI("https://github.com/khalidwaleed0/Anime_Ninja/"));
 				} catch (IOException | URISyntaxException e1) {
 					e1.printStackTrace();
 				}
@@ -223,7 +222,7 @@ public class gui extends JFrame {
 		});
 		updatesItem.setHorizontalAlignment(SwingConstants.LEFT);
 
-		updatesItem.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		updatesItem.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnNewMenu.add(updatesItem);
 
 		JMenuItem contactItem = new JMenuItem("Contact us");
@@ -233,7 +232,7 @@ public class gui extends JFrame {
 						, "Contact us", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		contactItem.setFont(new Font("Segoe UI", Font.BOLD, 15));
+		contactItem.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnNewMenu.add(contactItem);
 
 		JButton btnDownload = new JButton("Download" );
@@ -324,7 +323,7 @@ public class gui extends JFrame {
 		lblNewLabel_3 = new JLabel((String) null);
 		lblNewLabel_3.setForeground(Color.WHITE);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel_3.setBounds(12, 405, 287, 31);
+		lblNewLabel_3.setBounds(12, 405, 410, 31);
 		contentPane.add(lblNewLabel_3);
 
 		epComboBox.addActionListener(new ActionListener() {
@@ -437,7 +436,7 @@ public class gui extends JFrame {
 				similarSelect();
 				break;
 			case 4:
-				Thread.sleep(6000);
+				Thread.sleep(7000);
 				break;
 			}
 			progressBar.setIndeterminate(false);

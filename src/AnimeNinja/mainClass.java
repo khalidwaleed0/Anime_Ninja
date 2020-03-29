@@ -33,12 +33,11 @@ public class mainClass {
 		setupThread.start();
 
 		splashScreen ss = new splashScreen();
-		ss.loadingScreen();
 		ss.downloadLocation();
-		
 		downloader dl = new downloader();
 		Thread dlThread = new Thread(dl);
 		dlThread.start();
+		ss.loadingScreen();
 		
 		try {
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");

@@ -13,40 +13,36 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
-import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileSystemView;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 
 public class downloader implements Runnable{
 
-	private static WebDriver driver2;
+	protected static WebDriver driver2;
 	private static HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 	protected static ArrayList<String> megaLinks = new ArrayList<String>();
 	protected static ArrayList<String> driveLinks = new ArrayList<String>();
 	private TrayIcon trayIcon;
+	private static File defaultDir;
 	@Override
 	public void run()
 	{
 		setup();
+		removeOldUncompletedDownloads();
+		updater.update();
 		showTrayIcon();
 		megaDownloader();
 	}
 
-	private WebElement expandRootElement(WebElement element) {
-		WebElement ele = (WebElement) ((JavascriptExecutor) driver2)
-.executeScript("return arguments[0].shadowRoot",element);
-		return ele;
-	}
-
 	private void driveDownloader()
 	{
+		String epName = null;
+		String fullSize = null;
 		if(driveLinks.size() != 0)
 		{
 			driver2.get(driveLinks.get(0));
@@ -55,42 +51,88 @@ public class downloader implements Runnable{
 				driver2.findElement(By.tagName("p"));
 				try {
 					driver2.findElement(By.id("uc-download-link")).click();
+					String nameAndSize = driver2.findElement(By.cssSelector(".uc-name-size")).getText();
+					fullSize = nameAndSize.replaceAll("(.+\\()", "").replaceAll("\\)", "B");
+					epName = nameAndSize.replaceAll("\\[AnimeSanka.com]\\s|\\s\\(.+", "");
+					gui.lblNewLabel_3.setVisible(false);
+					gui.lblNewLabel_3.setText(epName);
+					gui.lblNewLabel_3.setVisible(true);
 				}catch(Exception e) {
 					gui.lblNewLabel_7.setText("Failed to download EP "+(gui.selectedEpisode+1)+" (Old Links)");
+					guiRefresh();
 					notifier("Download Failed (Old Links)","EP "+gui.selectedEpisode+1);
-					driveLinks.remove(0);
 				}
 			}catch(Exception e) {
+				gui.lblNewLabel_7.setText("Failed to download EP "+(gui.selectedEpisode+1)+" (Old Links)");
+				guiRefresh();
 				notifier("Download Failed (Old Links)","EP "+gui.selectedEpisode+1);
+				return;
 			}
-			driver2.get("chrome://downloads");
-			WebElement root1 = driver2.findElement(By.tagName("downloads-manager"));
-			WebElement shadowRoot1 = expandRootElement(root1);
-			WebElement root2 = shadowRoot1.findElement(By.id("frb0"));
-			WebElement shadowRoot2 = expandRootElement(root2);
-			String epName = shadowRoot2.findElement(By.id("name")).getText().replaceAll("\\[[^]]+\\]", "");
-			gui.lblNewLabel_3.setVisible(false);
-			gui.lblNewLabel_3.setText(epName);
-			gui.lblNewLabel_3.setVisible(true);
-
+			File tmpDownload = getTempDownloadFile();
+			double downloadInfo;
 			while(true)
 			{
-				String downloadInfo = shadowRoot2.findElement(By.id("description")).getText();
-				if (!downloadInfo.isEmpty())
+				downloadInfo = tmpDownload.length()/(1024*1024);
+				if (tmpDownload.exists())
 				{
-					gui.lblNewLabel_7.setText(downloadInfo);
-					gui.lblNewLabel_5.setText("Files left:"+megaLinks.size());
+					System.out.println("finding download info");
+					System.out.println(fullSize);
+					gui.lblNewLabel_7.setText(String.valueOf(downloadInfo)+" MB of "+fullSize);
+					gui.lblNewLabel_5.setText("Files left:"+driveLinks.size());
 					guiRefresh();
 				}
 				else
 				{
+					gui.lblNewLabel_7.setText("Download Completed");
+					guiRefresh();
 					notifier("Download Completed",epName);
+					break;
+				}
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private File getTempDownloadFile()
+	{
+		File tempDownload = null;
+		boolean found = false;
+		while(!found)
+		{
+			File[] files = defaultDir.listFiles();
+			for(int i=0 ; i<files.length ; i++)
+			{
+				if(files[i].getName().contains("crdownload"))
+				{
+					tempDownload = files[i];
+					found = true;
 					break;
 				}
 			}
 		}
+		System.out.println("found the file");
+		return tempDownload;
 	}
-
+	
+	private void removeOldUncompletedDownloads()
+	{
+		File[] files = defaultDir.listFiles();
+		for(int i=0 ; i<files.length ; i++)
+		{
+			if(files[i].getName().contains("crdownload"))
+				files[i].delete();
+		}
+	}
+	
 	private void megaDownloader()
 	{
 		String epName = "";
@@ -139,7 +181,6 @@ public class downloader implements Runnable{
 							driveLinks.remove(0);
 							break;
 						}
-
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException e1) {
@@ -193,7 +234,6 @@ public class downloader implements Runnable{
 	private void notifier(String downloadState ,String epName)
 	{
 		try{
-
 		    trayIcon.displayMessage(downloadState,epName, MessageType.NONE);
 		}catch(Exception ex){
 		    ex.printStackTrace();
@@ -219,12 +259,14 @@ public class downloader implements Runnable{
 		ChromeOptions chromeOptions = new ChromeOptions();
 		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver79.exe");
 		chromePrefs.put("profile.default_content_settings.popups", 0);
+		chromePrefs.put("profile.default_content_setting_values.notifications", 2);
+		chromePrefs.put("safebrowsing.enabled", "false");
+		chromePrefs.put("download.prompt_for_download", "false");
 		setDownloadLocation();
 		chromeOptions.setExperimentalOption("prefs", chromePrefs);
 	    chromeOptions.addArguments("--headless");
 	    chromeOptions.addArguments("--disable-gpu");
 	    chromeOptions.addArguments("--unlimited-storage");
-
 		driver2 = new ChromeDriver(chromeOptions);
 	    driver2.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 	}
@@ -232,18 +274,18 @@ public class downloader implements Runnable{
 	protected static void setDownloadLocation()
 	{
 		FileReader reader;
-		File defaultDir = new File(FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath()+"\\Anime Ninja");
+		defaultDir = new File(FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath()+"\\Anime Ninja");
 		try {
 			reader = new FileReader(new File(System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\Download Location.txt"));
 			BufferedReader br = new BufferedReader(reader);
 			defaultDir = new File(br.readLine());
 			br.close();
 			reader.close();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		chromePrefs.put("download.default_directory", defaultDir.getAbsolutePath());
+		updater.getdownloadLocation(defaultDir);
 	}
 
 	protected static void close()
