@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import javax.swing.filechooser.FileSystemView;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -33,8 +34,11 @@ public class downloader implements Runnable{
 	public void run()
 	{
 		setup();
-		removeOldUncompletedDownloads();
-		updater.update();
+		if(defaultDir.exists())
+			removeOldUncompletedDownloads();
+		else
+			defaultDir.mkdir();
+		updater.update();		
 		showTrayIcon();
 		megaDownloader();
 	}
@@ -158,6 +162,10 @@ public class downloader implements Runnable{
 						try {
 							driver2.findElement(By.cssSelector(".top-login-popup.sign.fm-dialog.pro-register-dialog.hidden"));
 						}catch(Exception e) {
+							((JavascriptExecutor)driver2).executeScript("window.open()");
+							ArrayList<String> tabs2 = new ArrayList<String> (driver2.getWindowHandles());
+						    driver2.close();
+						    driver2.switchTo().window(tabs2.get(1));
 							while(true)
 							{
 								driveDownloader();
@@ -217,7 +225,7 @@ public class downloader implements Runnable{
 
 	private void finishingDownload()
 	{
-		for(int i=15 ; i>=0 ; i--)
+		for(int i=14 ; i>=0 ; i--)
 		{
 			gui.lblNewLabel_7.setText("finishing download in "+i+" seconds");
 			try {

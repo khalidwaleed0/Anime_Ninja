@@ -3,14 +3,10 @@ package AnimeNinja;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Font;
-import java.awt.Image;
 import javax.swing.border.EmptyBorder;
 import java.awt.TextField;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -139,7 +135,7 @@ public class gui extends JFrame {
 	public gui() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/appIcon.png")));
 		setBackground(Color.DARK_GRAY);
-		setTitle("Anime Ninja V1.1");
+		setTitle("Anime Ninja V1.1.1");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener((WindowListener) new WindowAdapter()

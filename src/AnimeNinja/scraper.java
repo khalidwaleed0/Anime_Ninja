@@ -98,8 +98,8 @@ public class scraper {
 				isArabicOrder = true;
 			else if(seasonNames.get(i).contains("season") || seasonNames.get(i).contains("Season"))
 			{}
-			else if(seasonNames.get(i).contains("أوفا") || seasonNames.get(i).toLowerCase().contains("movie") || seasonNames.get(i).contains("فيلم")||
-					seasonNames.get(i).contains("الخاصة")|| seasonNames.get(i).contains("الخاصه"))
+			else if((seasonNames.get(i).contains("أوفا") || seasonNames.get(i).toLowerCase().contains("movie") || seasonNames.get(i).contains("فيلم")||
+					seasonNames.get(i).contains("الخاصة")|| seasonNames.get(i).contains("الخاصه")) && (!seasonNames.get(i).contains("جميع حلقات")))
 			{
 				seasonNames.remove(i);
 				seasons.remove(i);

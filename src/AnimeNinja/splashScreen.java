@@ -97,7 +97,7 @@ public class splashScreen {
 		JPanel contentPanel = new JPanel();
 		JTextField dirTextField;
 		dialog.setTitle("Anime Ninja");
-		dialog.setSize(466, 134);
+		dialog.setSize(475, 134);
 		dialog.setLocationRelativeTo(null);
 		dialog.getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -105,12 +105,12 @@ public class splashScreen {
 		contentPanel.setLayout(null);
 
 		dirTextField = new JTextField();
-		dirTextField.setBounds(109, 14, 238, 20);
+		dirTextField.setBounds(125, 14, 238, 22);
 		contentPanel.add(dirTextField);
 		dirTextField.setColumns(10);
 
 		JLabel lblDownloadDirectory = new JLabel("Download Directory");
-		lblDownloadDirectory.setBounds(10, 17, 94, 14);
+		lblDownloadDirectory.setBounds(7, 17, 115, 14);
 		contentPanel.add(lblDownloadDirectory);
 
 		JButton btnBrowse = new JButton("Browse");
@@ -137,7 +137,7 @@ public class splashScreen {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		btnBrowse.setBounds(357, 13, 72, 21);
+		btnBrowse.setBounds(367, 13, 74, 24);
 		btnBrowse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath(), FileSystemView.getFileSystemView());
@@ -155,7 +155,7 @@ public class splashScreen {
 		});
 		contentPanel.add(btnBrowse);
 		JButton btnOk = new JButton("OK");
-		btnOk.setBounds(357, 45, 72, 23);
+		btnOk.setBounds(367, 45, 74, 23);
 		contentPanel.add(btnOk);
 		dialog.setVisible(true);
 		btnOk.addActionListener(new ActionListener() {
