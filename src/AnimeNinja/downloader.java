@@ -28,6 +28,7 @@ public class downloader implements Runnable{
 	private static HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 	protected static ArrayList<String> megaLinks = new ArrayList<String>();
 	protected static ArrayList<String> driveLinks = new ArrayList<String>();
+	protected static ArrayList<String> zippyShareLinks = new ArrayList<String>();
 	private TrayIcon trayIcon;
 	private static File defaultDir;
 	@Override
@@ -42,13 +43,69 @@ public class downloader implements Runnable{
 		showTrayIcon();
 		megaDownloader();
 	}
-
+	
+	private void zippyShareDownloader()
+	{
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		if(zippyShareLinks.size() != 0)
+		{
+			gui.lblNewLabel_7.setText("Trying zippyshare Link...");
+			guiRefresh();
+			driver2.get(zippyShareLinks.get(0));
+			zippyShareLinks.remove(0);
+			try {
+				String epName = driver2.findElement(By.cssSelector(".center font:nth-of-type(3)")).getText().replaceAll("\\[AnimeSanka.com]\\s|\\s\\(.+", "");
+				String fullSize = driver2.findElement(By.cssSelector(".center font:nth-of-type(5)")).getText();
+				driver2.get(driver2.findElement(By.cssSelector("#dlbutton")).getAttribute("href"));
+				gui.lblNewLabel_3.setVisible(false);
+				gui.lblNewLabel_3.setText(epName);
+				gui.lblNewLabel_3.setVisible(true);
+				File tmpDownload = getTempDownloadFile();
+				double downloadInfo;
+				while(true)
+				{
+					downloadInfo = tmpDownload.length()/(1024*1024);
+					if (tmpDownload.exists())
+					{
+						System.out.println("finding download info");
+						System.out.println(fullSize);
+						gui.lblNewLabel_7.setText(String.valueOf(downloadInfo)+" MB of "+fullSize);
+						gui.lblNewLabel_5.setText("Files left:"+driveLinks.size());
+						guiRefresh();
+					}
+					else
+					{
+						gui.lblNewLabel_7.setText("Download Completed");
+						guiRefresh();
+						notifier("Download Completed",epName);
+						break;
+					}
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}catch(Exception e) {
+				gui.lblNewLabel_7.setText("Failed to download EP "+(gui.selectedEpisode+1)+" (Old Links)");
+				guiRefresh();
+				notifier("Download Failed (Old Links)","EP "+gui.selectedEpisode+1);
+			}	
+		}
+	}
+	
 	private void driveDownloader()
 	{
 		String epName = null;
 		String fullSize = null;
 		if(driveLinks.size() != 0)
 		{
+			gui.lblNewLabel_7.setText("Trying Google Drive Link...");
+			guiRefresh();
 			driver2.get(driveLinks.get(0));
 			driveLinks.remove(0);
 			try {
@@ -62,14 +119,10 @@ public class downloader implements Runnable{
 					gui.lblNewLabel_3.setText(epName);
 					gui.lblNewLabel_3.setVisible(true);
 				}catch(Exception e) {
-					gui.lblNewLabel_7.setText("Failed to download EP "+(gui.selectedEpisode+1)+" (Old Links)");
-					guiRefresh();
-					notifier("Download Failed (Old Links)","EP "+gui.selectedEpisode+1);
+					zippyShareDownloader();
 				}
 			}catch(Exception e) {
-				gui.lblNewLabel_7.setText("Failed to download EP "+(gui.selectedEpisode+1)+" (Old Links)");
-				guiRefresh();
-				notifier("Download Failed (Old Links)","EP "+gui.selectedEpisode+1);
+				zippyShareDownloader();
 				return;
 			}
 			File tmpDownload = getTempDownloadFile();
@@ -144,6 +197,8 @@ public class downloader implements Runnable{
 		{
 			if(megaLinks.size()!=0)
 			{
+				gui.lblNewLabel_7.setText("Trying mega.nz Link...");
+				guiRefresh();
 			    driver2.get(megaLinks.get(0));
 				megaLinks.remove(0);
 

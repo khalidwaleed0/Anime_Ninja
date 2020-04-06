@@ -213,7 +213,6 @@ public class scraper {
 
 		}
 		ArrayList<String> episodeNumbers = new ArrayList<String>();
-		downloader.megaLinks.removeAll(downloader.megaLinks);
 		episodes = driver.findElements(By.cssSelector(".selective select option"));
 		Collections.reverse(episodes);
 		for(int i=0 ; i<episodes.size() ; i++)

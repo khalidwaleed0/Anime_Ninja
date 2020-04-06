@@ -135,7 +135,7 @@ public class gui extends JFrame {
 	public gui() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/appIcon.png")));
 		setBackground(Color.DARK_GRAY);
-		setTitle("Anime Ninja V1.1.1");
+		setTitle("Anime Ninja V1.2");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener((WindowListener) new WindowAdapter()
@@ -358,15 +358,19 @@ public class gui extends JFrame {
 				ld4.execute();
 				Pattern pat1 = Pattern.compile("(https:\\/\\/mega\\S+)");
 				Pattern pat2 = Pattern.compile("(https:\\/\\/drive\\S+)");
-				Matcher mat1 = null,mat2=null;
+				Pattern pat3 = Pattern.compile("(https:\\/\\/www\\d\\S+)");
+				Matcher mat1 = null,mat2=null,mat3=null;
 				for(int i=startComboBox.getSelectedIndex()-1 ; i < endComboBox.getSelectedIndex() ; i++)
 				{
 					mat1 = pat1.matcher(scraper.episodes.get(i).getAttribute("data-links"));
 					mat2 = pat2.matcher(scraper.episodes.get(i).getAttribute("data-links"));
+					mat3 = pat3.matcher(scraper.episodes.get(i).getAttribute("data-links"));
 					if(mat1.find())
 						downloader.megaLinks.add(mat1.group(1));
 					if(mat2.find())
 						downloader.driveLinks.add(mat2.group(1));
+					if(mat3.find())
+						downloader.zippyShareLinks.add(mat3.group(1));
 				}
 			}
 		});
@@ -399,12 +403,17 @@ public class gui extends JFrame {
 				{
 					Pattern pat1 = Pattern.compile("(https:\\/\\/mega\\S+)");
 					Pattern pat2 = Pattern.compile("(https:\\/\\/drive\\S+)");
+					Pattern pat3 = Pattern.compile("(https:\\/\\/www\\d\\S+)");
 					Matcher mat1 = pat1.matcher(scraper.episodes.get(epComboBox.getSelectedIndex()-1).getAttribute("data-links"));
 					Matcher mat2 = pat2.matcher(scraper.episodes.get(epComboBox.getSelectedIndex()-1).getAttribute("data-links"));
+					Matcher mat3 = pat3.matcher(scraper.episodes.get(epComboBox.getSelectedIndex()-1).getAttribute("data-links"));
 					if(mat1.find())
 						downloader.megaLinks.add(mat1.group(1));
 					if(mat2.find())
 						downloader.driveLinks.add(mat2.group(1));
+					if(mat3.find())
+						downloader.zippyShareLinks.add(mat3.group(1));
+					System.out.println(downloader.zippyShareLinks);
 					loading ld4 = new loading(4);
 					ld4.execute();
 				}
