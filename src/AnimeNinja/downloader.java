@@ -307,7 +307,7 @@ public class downloader implements Runnable{
 	    Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("/appIcon.png"));
 	    trayIcon = new TrayIcon(image, "Java AWT Tray Demo");
 	    trayIcon.setImageAutoSize(true);
-	    trayIcon.setToolTip("Anime Downloader");
+	    trayIcon.setToolTip("Anime Ninja");
 	    try {
 			tray.add(trayIcon);
 		} catch (AWTException e) {
