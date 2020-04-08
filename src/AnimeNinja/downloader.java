@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import javax.swing.filechooser.FileSystemView;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -217,10 +216,9 @@ public class downloader implements Runnable{
 						try {
 							driver2.findElement(By.cssSelector(".top-login-popup.sign.fm-dialog.pro-register-dialog.hidden"));
 						}catch(Exception e) {
-							((JavascriptExecutor)driver2).executeScript("window.open()");
-							ArrayList<String> tabs2 = new ArrayList<String> (driver2.getWindowHandles());
+							gui.lblNewLabel_7.setText("Mega.nz reached download limit,please wait...");
 						    driver2.close();
-						    driver2.switchTo().window(tabs2.get(1));
+						    setup();
 							while(true)
 							{
 								driveDownloader();
@@ -240,7 +238,7 @@ public class downloader implements Runnable{
 							guiRefresh();
 						}catch(Exception e) {
 							finishingDownload();
-							notifier("Downloade Completed",epName);
+							notifier("Download Completed",epName);
 							driveLinks.remove(0);
 							break;
 						}
