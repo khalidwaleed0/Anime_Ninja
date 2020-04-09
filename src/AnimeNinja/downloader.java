@@ -218,6 +218,7 @@ public class downloader implements Runnable{
 						}catch(Exception e) {
 							gui.lblNewLabel_7.setText("Mega.nz reached download limit,please wait...");
 						    driver2.close();
+						    driver2.quit();
 						    setup();
 							while(true)
 							{
