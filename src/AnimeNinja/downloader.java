@@ -217,6 +217,7 @@ public class downloader implements Runnable{
 							driver2.findElement(By.cssSelector(".top-login-popup.sign.fm-dialog.pro-register-dialog.hidden"));
 						}catch(Exception e) {
 							gui.lblNewLabel_7.setText("Mega.nz reached download limit,please wait...");
+							guiRefresh();
 						    driver2.close();
 						    driver2.quit();
 						    setup();
