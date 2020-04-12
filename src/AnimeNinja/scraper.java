@@ -133,7 +133,7 @@ public class scraper {
 			seasonOrder = new ArrayList<String>(Arrays.asList(new String[]{"الموسم الأول","الموسم الثان","الموسم الثالث","الموسم الرابع","الموسم الخامس","الموسم السادس"}));
 		else
 			seasonOrder = new ArrayList<String>(Arrays.asList(new String[]{"season 1","season 2","season 3","season 4","season 5","season 6"}));
-		for(int i=0 ; i<seasons.size() ; i++)
+		for(int i=0 ; i<6 ; i++)
 		{
 			for(int j=0 ; j<seasons.size() ; j++)
 			{

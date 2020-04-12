@@ -248,7 +248,7 @@ public class gui extends JFrame {
 		contentPane.add(lblNewLabel_6);
 		lblNewLabel_6.setVisible(false);
 
-		similarComboBox.setBounds(200, 186, 189, 22);
+		similarComboBox.setBounds(200, 186, 195, 22);
 		similarComboBox.setVisible(false);
 		contentPane.add(similarComboBox);
 
