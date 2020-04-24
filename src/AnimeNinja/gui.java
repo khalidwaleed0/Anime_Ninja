@@ -135,7 +135,7 @@ public class gui extends JFrame {
 	public gui() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/appIcon.png")));
 		setBackground(Color.DARK_GRAY);
-		setTitle("Anime Ninja V1.2.3");
+		setTitle("Anime Ninja V1.2.4");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener((WindowListener) new WindowAdapter()

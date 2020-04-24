@@ -320,7 +320,7 @@ public class downloader implements Runnable{
 	private void setup()
 	{
 		ChromeOptions chromeOptions = new ChromeOptions();
-		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver79.exe");
+		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver81.exe");
 		chromePrefs.put("profile.default_content_settings.popups", 0);
 		chromePrefs.put("profile.default_content_setting_values.notifications", 2);
 		chromePrefs.put("safebrowsing.enabled", "false");

@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,7 +32,7 @@ public class scraper {
 
 	protected static void setup()
 	{
-		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver79.exe");
+		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver81.exe");
 		ChromeOptions chromeOptions = new ChromeOptions();
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 		chromePrefs.put("profile.default_content_settings.popups", 0);
@@ -43,6 +44,8 @@ public class scraper {
 		driver = new ChromeDriver(chromeOptions);
 		driver.manage().window().setSize(new Dimension(1900,980));
 	    driver.get("https://www.animesanka.net/search?q=haikyuu");
+	    
+	    driver.findElement(By.tagName("a")).sendKeys("email or whatever you are writing"+Keys.ENTER);
 	}
 
 	protected static void close()
