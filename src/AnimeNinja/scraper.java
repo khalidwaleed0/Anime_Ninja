@@ -6,11 +6,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -44,8 +45,6 @@ public class scraper {
 		driver = new ChromeDriver(chromeOptions);
 		driver.manage().window().setSize(new Dimension(1900,980));
 	    driver.get("https://www.animesanka.net/search?q=haikyuu");
-	    
-	    driver.findElement(By.tagName("a")).sendKeys("email or whatever you are writing"+Keys.ENTER);
 	}
 
 	protected static void close()
@@ -65,7 +64,7 @@ public class scraper {
 	protected static boolean search(String animeName)			//returns whether or not anime exists
 	{
 		seasons.removeAll(seasons);
-		driver.get("https://www.animesanka.net/search?q="+animeName.trim().replaceAll("\\s", "+"));
+		driver.navigate().to("https://www.animesanka.net/search?q="+animeName.trim().replaceAll("\\s", "+"));
 		JavascriptExecutor js1 = ((JavascriptExecutor) driver);
 		js1.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 		try {
@@ -211,16 +210,20 @@ public class scraper {
 	protected static ArrayList<String> getEpisodes()		//returns an Array containing episode numbers
 	{
 		try {
-				driver.get(driver.findElement(By.cssSelector(".tab-content-sanka.content3-sanka .ibtn.iNor.ibtn-4")).getAttribute("href"));
+				String tvLink = driver.findElement(By.cssSelector(".tab-content-sanka.content3-sanka .ibtn.iNor.ibtn-4")).getAttribute("href");
+				Pattern pat = Pattern.compile("(tv.+)");
+				Matcher mat = pat.matcher(tvLink);
+				if(mat.find())
+					driver.navigate().to("https://"+mat.group(1).replaceAll("%2F", "/"));
 		}catch(Exception e) {
-
+			
 		}
 		ArrayList<String> episodeNumbers = new ArrayList<String>();
 		episodes = driver.findElements(By.cssSelector(".selective select option"));
 		Collections.reverse(episodes);
 		for(int i=0 ; i<episodes.size() ; i++)
 		{
-			episodeNumbers.add(episodes.get(i).getAttribute("value").replaceAll("\\D+", ""));
+			episodeNumbers.add(episodes.get(i).getText().replaceAll("\\D+", ""));
 		}
 		episodeNumbers.add(0, "Choose");
 		return episodeNumbers;
