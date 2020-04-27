@@ -24,7 +24,7 @@ public class updater {
 	{
 		downloader.driver2.get("https://github.com/khalidwaleed0/Anime_Ninja/releases");
 	    List<WebElement> releases = downloader.driver2.findElements(By.cssSelector(".pl-2.flex-auto.min-width-0.text-bold"));
-	    if(releases.size() > 8)
+	    if(releases.size() > 9)
 	    {
 	    	String whatsNew = downloader.driver2.findElement(By.cssSelector(".markdown-body")).getText();
 	    	String fullSize = downloader.driver2.findElement(By.cssSelector(".d-flex.flex-justify-between.flex-items-center.py-1.py-md-2.Box-body.px-2 small")).getText();
