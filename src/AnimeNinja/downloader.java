@@ -61,7 +61,7 @@ public class downloader implements Runnable{
 				String fullSize = driver2.findElement(By.cssSelector(".center font:nth-of-type(5)")).getText();
 				driver2.get(driver2.findElement(By.cssSelector("#dlbutton")).getAttribute("href"));
 				gui.lblNewLabel_3.setVisible(false);
-				gui.lblNewLabel_3.setText(epName);
+				gui.lblNewLabel_3.setText("epName : "+epName);
 				gui.lblNewLabel_3.setVisible(true);
 				File tmpDownload = getTempDownloadFile();
 				double downloadInfo;
@@ -70,8 +70,6 @@ public class downloader implements Runnable{
 					downloadInfo = tmpDownload.length()/(1024*1024);
 					if (tmpDownload.exists())
 					{
-						System.out.println("finding download info");
-						System.out.println(fullSize);
 						gui.lblNewLabel_7.setText(String.valueOf(downloadInfo)+" MB of "+fullSize);
 						gui.lblNewLabel_5.setText("Files left:"+driveLinks.size());
 						guiRefresh();
@@ -100,7 +98,7 @@ public class downloader implements Runnable{
 	private void driveDownloader()
 	{
 		String epName = null;
-		String fullSize = null;
+		String fullSize = "(full size is unknown)";
 		if(driveLinks.size() != 0)
 		{
 			gui.lblNewLabel_7.setText("Trying Google Drive Link...");
@@ -110,12 +108,17 @@ public class downloader implements Runnable{
 			try {
 				driver2.findElement(By.tagName("p"));
 				try {
-					driver2.findElement(By.id("uc-download-link")).click();
-					String nameAndSize = driver2.findElement(By.cssSelector(".uc-name-size")).getText();
-					fullSize = nameAndSize.replaceAll("(.+\\()", "").replaceAll("\\)", "B");
-					epName = nameAndSize.replaceAll("\\[AnimeSanka.com]\\s|\\s\\(.+", "");
+					if(driver2.getTitle().contains("Google Drive"))
+					{
+						driver2.findElement(By.id("uc-download-link")).click();
+						String nameAndSize = driver2.findElement(By.cssSelector(".uc-name-size")).getText();
+						fullSize = nameAndSize.replaceAll("(.+\\()", "").replaceAll("\\)", "B");
+						epName = nameAndSize.replaceAll("\\[[^]]+\\]", "");
+					}
+					else
+						epName = getTempDownloadFile().getName().replaceAll("\\[[^]]+\\]|\\.crdownload", "");
 					gui.lblNewLabel_3.setVisible(false);
-					gui.lblNewLabel_3.setText(epName);
+					gui.lblNewLabel_3.setText("epName : "+epName);
 					gui.lblNewLabel_3.setVisible(true);
 				}catch(Exception e) {
 					zippyShareDownloader();
@@ -131,8 +134,6 @@ public class downloader implements Runnable{
 				downloadInfo = tmpDownload.length()/(1024*1024);
 				if (tmpDownload.exists())
 				{
-					System.out.println("finding download info");
-					System.out.println(fullSize);
 					gui.lblNewLabel_7.setText(String.valueOf(downloadInfo)+" MB of "+fullSize);
 					gui.lblNewLabel_5.setText("Files left:"+driveLinks.size());
 					guiRefresh();
@@ -175,7 +176,6 @@ public class downloader implements Runnable{
 				}
 			}
 		}
-		System.out.println("found the file");
 		return tempDownload;
 	}
 	

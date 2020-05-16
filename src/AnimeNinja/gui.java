@@ -135,7 +135,7 @@ public class gui extends JFrame {
 	public gui() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/appIcon.png")));
 		setBackground(Color.DARK_GRAY);
-		setTitle("Anime Ninja V1.2.5");
+		setTitle("Anime Ninja V1.2.6");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener((WindowListener) new WindowAdapter()
@@ -413,7 +413,6 @@ public class gui extends JFrame {
 						downloader.driveLinks.add(mat2.group(1));
 					if(mat3.find())
 						downloader.zippyShareLinks.add(mat3.group(1));
-					System.out.println(downloader.zippyShareLinks);
 					loading ld4 = new loading(4);
 					ld4.execute();
 				}
