@@ -39,8 +39,8 @@ public class scraper {
 		chromePrefs.put("profile.default_content_settings.popups", 0);
 		chromePrefs.put("profile.default_content_setting_values.notifications", 2);
 		chromeOptions.setExperimentalOption("prefs", chromePrefs);
-//	    chromeOptions.addArguments("--headless");
-//	    chromeOptions.addArguments("--disable-gpu");
+	    chromeOptions.addArguments("--headless");
+	    chromeOptions.addArguments("--disable-gpu");
 	    chromeOptions.addArguments("--unlimited-storage");
 		driver = new ChromeDriver(chromeOptions);
 		driver.manage().window().setSize(new Dimension(1900,980));
