@@ -33,18 +33,18 @@ public class scraper {
 
 	protected static void setup()
 	{
-		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver81.exe");
+		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver83.exe");
 		ChromeOptions chromeOptions = new ChromeOptions();
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 		chromePrefs.put("profile.default_content_settings.popups", 0);
 		chromePrefs.put("profile.default_content_setting_values.notifications", 2);
 		chromeOptions.setExperimentalOption("prefs", chromePrefs);
-	    chromeOptions.addArguments("--headless");
-	    chromeOptions.addArguments("--disable-gpu");
+//	    chromeOptions.addArguments("--headless");
+//	    chromeOptions.addArguments("--disable-gpu");
 	    chromeOptions.addArguments("--unlimited-storage");
 		driver = new ChromeDriver(chromeOptions);
 		driver.manage().window().setSize(new Dimension(1900,980));
-	    driver.get("https://www.animesanka.net/search?q=haikyuu");
+	    driver.get("https://w.animesanka.com/search?q=haikyuu");
 	}
 
 	protected static void close()
@@ -64,7 +64,7 @@ public class scraper {
 	protected static boolean search(String animeName)			//returns whether or not anime exists
 	{
 		seasons.removeAll(seasons);
-		driver.navigate().to("https://www.animesanka.net/search?q="+animeName.trim().replaceAll("\\s", "+"));
+		driver.navigate().to("https://w.animesanka.com/search?q="+animeName.trim().replaceAll("\\s", "+"));
 		JavascriptExecutor js1 = ((JavascriptExecutor) driver);
 		js1.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 		try {
@@ -211,10 +211,10 @@ public class scraper {
 	{
 		try {
 				String tvLink = driver.findElement(By.cssSelector(".tab-content-sanka.content3-sanka .ibtn.iNor.ibtn-4")).getAttribute("href");
-				Pattern pat = Pattern.compile("(tv.+)");
+				Pattern pat = Pattern.compile("(animesanka\\.club.+)");
 				Matcher mat = pat.matcher(tvLink);
 				if(mat.find())
-					driver.navigate().to("https://"+mat.group(1).replaceAll("%2F", "/"));
+					driver.navigate().to("https://www."+mat.group(1).replaceAll("%2F", "/"));
 		}catch(Exception e) {
 			
 		}
