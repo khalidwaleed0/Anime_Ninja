@@ -28,6 +28,17 @@ public class mainClass {
 			folder.mkdir();
 			extractChromeDriver(chromeDriver);
 		}
+		
+		try {
+			updater.update();
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Error during update\nPlease download the latest version manually");
+			try {
+				Desktop.getDesktop().browse(new URI("https://github.com/khalidwaleed0/Anime_Ninja/releases"));
+			} catch (IOException | URISyntaxException e1) {
+			}
+		}
+		
 		scraperSetup setup = new scraperSetup();
 		Thread setupThread = new Thread(setup);
 		setupThread.start();

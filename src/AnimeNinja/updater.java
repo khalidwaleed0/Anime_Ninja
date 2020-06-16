@@ -3,111 +3,97 @@ package AnimeNinja;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Font;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 public class updater {
 	
-	private static File downloadLocation;
+	private static JLabel lblDownloadInfo;
+	private static JDialog dialog;
 	
-	protected static void update()
+	protected static void update() throws IOException
 	{
-		downloader.driver2.get("https://github.com/khalidwaleed0/Anime_Ninja/releases");
-	    List<WebElement> releases = downloader.driver2.findElements(By.cssSelector(".pl-2.flex-auto.min-width-0.text-bold"));
-	    if(releases.size() > 12)
-	    {
-	    	String whatsNew = downloader.driver2.findElement(By.cssSelector(".markdown-body")).getText();
-	    	String fullSize = downloader.driver2.findElement(By.cssSelector(".d-flex.flex-justify-between.flex-items-center.py-1.py-md-2.Box-body.px-2 small")).getText();
-	    	releases.get(0).click();
-			JDialog dialog = new JDialog();
-			JPanel contentPanel = new JPanel();
-			dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-			dialog.setTitle("New Update");
-			dialog.setAlwaysOnTop(true);
-			dialog.setVisible(true);
-			dialog.setBounds(100, 100, 450, 151);
-			dialog.getContentPane().setLayout(new BorderLayout());
-			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-			dialog.getContentPane().add(contentPanel, BorderLayout.CENTER);
-			contentPanel.setLayout(null);
-			dialog.setLocationRelativeTo(null);
-			
-			JLabel lblDownloadInfo = new JLabel("Downloading");
-			lblDownloadInfo.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblDownloadInfo.setBounds(10, 45, 380, 21);
-			contentPanel.add(lblDownloadInfo);
-			
-			JLabel lblTheNewVersion = new JLabel("The new Version will be on desktop and will open automatically");
-			lblTheNewVersion.setBounds(10, 87, 360, 14);
-			contentPanel.add(lblTheNewVersion);
-			
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			File[] files = downloadLocation.listFiles();
-			File tempFile = null;
-			boolean found = false;
-			while(!found)
-			{
-				for(int i=0 ; i < files.length ; i++)
-				{
-					if(files[i].getName().contains("crdownload"))
-					{
-						tempFile = files[i];
-						found = true;
+		showUpdateWindow();
+		Document doc = Jsoup.connect("https://github.com/khalidwaleed0/Anime_Ninja/releases").get();
+		Element latestReleaseName = doc.selectFirst(".f1.flex-auto.min-width-0.text-normal a");
+		if(!latestReleaseName.text().equals("1.2.9"))
+		{
+			String whatsNew = doc.selectFirst(".markdown-body p").wholeText();
+			String latestReleaseLink = "https://github.com/"+doc.selectFirst(".d-flex.flex-items-center.min-width-0").attr("href");
+			String fullSize = doc.selectFirst(".pl-2.text-gray.flex-shrink-0").text();
+			File downloadedFile = new File(System.getProperty("user.home")+"\\Desktop\\Anime.Ninja(Latest).exe");
+			try (BufferedInputStream inputStream = new BufferedInputStream(new URL(latestReleaseLink).openStream());
+				FileOutputStream fileOS = new FileOutputStream(downloadedFile)) {
+					byte data[] = new byte[1024];
+					int byteContent;
+					while ((byteContent = inputStream.read(data, 0, 1024)) != -1) {
+						fileOS.write(data, 0, byteContent);
+						System.out.println("downloaded : " + String.format("%.2f", (float)downloadedFile.length()/(1024*1024)) +" MB");
+						lblDownloadInfo.setVisible(false);
+						lblDownloadInfo.setText("Downloaded : "+ String.format("%.2f", (float)downloadedFile.length()/(1024*1024)) + " MB of "+fullSize);
+						lblDownloadInfo.setVisible(true);
 					}
-				}
-			}
-			double downloadedSize;
-			while(true)
-			{
+				} catch (IOException e) {
+					JOptionPane.showMessageDialog(null, "Error while downloading latest Version\nPlease download it manually");
+					try {
+						Desktop.getDesktop().browse(new URI("https://github.com/khalidwaleed0/Anime_Ninja/releases"));
+					} catch (URISyntaxException e1) {
+					}
+				  }
+				lblDownloadInfo.setText("Download Completed");
+				dialog.dispose();
+				JOptionPane.showMessageDialog(null, whatsNew);
 				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+					Desktop.getDesktop().open(batch());
+				} catch (IOException e) {
 				}
-				downloadedSize = tempFile.length()/(1024*1024);
-				if (tempFile.exists())
-				{
-					lblDownloadInfo.setVisible(false);
-					lblDownloadInfo.setText("Downloaded : "+downloadedSize+" MB of "+fullSize);
-					lblDownloadInfo.setVisible(true);
-				}
-				else
-				{
-					lblDownloadInfo.setText("Download Completed");
-					break;
-				}
+				System.exit(0);
 			}
-			scraper.close();
-			downloader.close();
-			dialog.dispose();
-			JOptionPane.showMessageDialog(null, whatsNew);
-			dialog.dispose();
-			try {
-				Desktop.getDesktop().open(batch());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.exit(0);
-	    }
+	}
+	
+	private static void showUpdateWindow()
+	{
+		dialog = new JDialog();
+		JPanel contentPanel = new JPanel();
+		dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		dialog.setTitle("New Update");
+		dialog.setAlwaysOnTop(true);
+		dialog.setVisible(true);
+		dialog.setBounds(100, 100, 450, 151);
+		dialog.getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		dialog.getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+		dialog.setLocationRelativeTo(null);
+		
+		lblDownloadInfo = new JLabel("Downloading");
+		lblDownloadInfo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblDownloadInfo.setBounds(10, 45, 380, 21);
+		contentPanel.add(lblDownloadInfo);
+		
+		JLabel lblTheNewVersion = new JLabel("The new Version will be on desktop and will open automatically");
+		lblTheNewVersion.setBounds(10, 87, 360, 14);
+		contentPanel.add(lblTheNewVersion);
 	}
 	
 	private static File batch()
 	{
-		File batch = new File("updater.bat");
+		File batch = new File(System.getProperty("user.home")+"\\Desktop\\updater.bat");
 		try {
 			PrintWriter writer = new PrintWriter(batch);
 			writer.print("@echo off\r\n" + 
@@ -116,8 +102,8 @@ public class updater {
 					"TASKKILL /im javaw.exe\r\n" + 
 					"DEL Anime.Ninja.exe\r\n" + 
 					"DEL \"Anime Ninja.exe\"\r\n" + 
-					"move " +"\""+downloadLocation+"\\Anime.Ninja.exe"+"\" "+ "\"" + "%USERPROFILE%\\Desktop\\Anime.Ninja.exe" +"\"\r\n"+
-					"\""+"%USERPROFILE%\\Desktop\\Anime.Ninja.exe\"\r\n" + 
+					"rename Anime.Ninja(Latest).exe Anime.Ninja.exe"+"\r\n"+
+					"Anime.Ninja.exe\r\n" + 
 					"del updater.bat\r\n" + 
 					"");
 			writer.close();
@@ -125,10 +111,5 @@ public class updater {
 			e.printStackTrace();
 		}
 		return batch;
-	}
-	
-	protected static void getdownloadLocation(File dl)
-	{
-		downloadLocation = dl;
 	}
 }

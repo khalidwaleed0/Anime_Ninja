@@ -37,8 +37,7 @@ public class downloader implements Runnable{
 		if(defaultDir.exists())
 			removeOldUncompletedDownloads();
 		else
-			defaultDir.mkdir();
-		updater.update();		
+			defaultDir.mkdir();		
 		showTrayIcon();
 		megaDownloader();
 	}
@@ -348,7 +347,6 @@ public class downloader implements Runnable{
 			e.printStackTrace();
 		}
 		chromePrefs.put("download.default_directory", defaultDir.getAbsolutePath());
-		updater.getdownloadLocation(defaultDir);
 	}
 
 	protected static void close()
