@@ -30,7 +30,7 @@ public class updater {
 	{
 		Document doc = Jsoup.connect("https://github.com/khalidwaleed0/Anime_Ninja/releases").get();
 		Element latestReleaseName = doc.selectFirst(".f1.flex-auto.min-width-0.text-normal a");
-		if(!latestReleaseName.text().equals("1.2.10"))
+		if(!latestReleaseName.text().equals("1.2.11"))
 		{
 			showUpdateWindow();
 			String whatsNew = doc.selectFirst(".markdown-body p").wholeText();

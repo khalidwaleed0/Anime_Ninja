@@ -17,7 +17,7 @@ public class mainClass {
 	public static void main(String[] args) {
 		checkChromeInstallation();
 		File folder = new File(System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja");
-		File chromeDriver = new File(folder+"\\chromedriver83.exe");
+		File chromeDriver = new File(folder+"\\chromedriver85.exe");
 		if(folder.exists())
 		{
 			if(!chromeDriver.exists())
@@ -87,7 +87,7 @@ public class mainClass {
 	
 	private static void extractChromeDriver(File chromeDriver)
 	{
-		InputStream input = (mainClass.class.getResourceAsStream("/chromedriver83.exe"));
+		InputStream input = (mainClass.class.getResourceAsStream("/chromedriver85.exe"));
   	     try {
 				Files.copy(input, chromeDriver.toPath());
 				input.close();
