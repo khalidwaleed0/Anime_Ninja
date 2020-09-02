@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import javax.swing.filechooser.FileSystemView;
 import org.openqa.selenium.By;
-import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;

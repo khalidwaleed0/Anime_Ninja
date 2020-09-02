@@ -15,7 +15,8 @@ import java.util.regex.Pattern;
 import java.awt.Toolkit;
 
 public class gui extends JFrame {
-
+	
+	private static final long serialVersionUID = -4794645700097036889L;
 	TextField searchTextField = new TextField();
 	JLabel imgLabel = new JLabel();
 	JLabel lblNewLabel_6 = new JLabel("Similar Results");
@@ -135,7 +136,7 @@ public class gui extends JFrame {
 	public gui() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/appIcon.png")));
 		setBackground(Color.DARK_GRAY);
-		setTitle("Anime Ninja V1.2.11");
+		setTitle("Anime Ninja v1.3.0");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener((WindowListener) new WindowAdapter()
