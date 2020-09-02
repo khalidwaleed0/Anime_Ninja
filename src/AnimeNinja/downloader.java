@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import javax.swing.filechooser.FileSystemView;
 import org.openqa.selenium.By;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -319,7 +320,7 @@ public class downloader implements Runnable{
 	private void setup()
 	{
 		ChromeOptions chromeOptions = new ChromeOptions();
-		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver85.exe");
+		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver.exe");
 		chromePrefs.put("profile.default_content_settings.popups", 0);
 		chromePrefs.put("profile.default_content_setting_values.notifications", 2);
 		chromePrefs.put("safebrowsing.enabled", "false");

@@ -1,9 +1,15 @@
 package AnimeNinja;
 
-public class scraperSetup implements Runnable {
+import org.openqa.selenium.SessionNotCreatedException;
 
+public class scraperSetup implements Runnable {
+	public boolean isSessionCreated = true;
 	@Override
 	public void run() {
-		scraper.setup();
+		try{
+			scraper.setup();
+		}catch(SessionNotCreatedException e) {
+			isSessionCreated = false;
+		}
 	}
 }

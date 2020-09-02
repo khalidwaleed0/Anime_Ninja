@@ -17,7 +17,7 @@ public class mainClass {
 	public static void main(String[] args) {
 		checkChromeInstallation();
 		File folder = new File(System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja");
-		File chromeDriver = new File(folder+"\\chromedriver85.exe");
+		File chromeDriver = new File(folder+"\\chromedriver.exe");
 		if(folder.exists())
 		{
 			if(!chromeDriver.exists())
@@ -44,28 +44,56 @@ public class mainClass {
 		setupThread.start();
 
 		splashScreen ss = new splashScreen();
-		ss.downloadLocation();
-		downloader dl = new downloader();
-		Thread dlThread = new Thread(dl);
-		dlThread.start();
-		ss.loadingScreen();
-		
 		try {
-			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e2) {
-			e2.printStackTrace();
+			Thread.sleep(2000);
+		} catch (InterruptedException e3) {
+			e3.printStackTrace();
 		}
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					gui frame = new gui();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		if(setup.isSessionCreated)
+		{
+			ss.downloadLocation();
+			downloader dl = new downloader();
+			Thread dlThread = new Thread(dl);
+			dlThread.start();
+			ss.loadingScreen();
+			
+			try {
+				UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+					| UnsupportedLookAndFeelException e2) {
+				e2.printStackTrace();
 			}
-		});
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						gui frame = new gui();
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+		else
+		{
+			try {
+				Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe");
+				File oldChromeDriver = new File(System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver.exe");
+				oldChromeDriver.delete();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						UpdateHelp uh = new UpdateHelp();
+						uh.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
 	}
 	
 	private static void checkChromeInstallation()
@@ -87,7 +115,7 @@ public class mainClass {
 	
 	private static void extractChromeDriver(File chromeDriver)
 	{
-		InputStream input = (mainClass.class.getResourceAsStream("/chromedriver85.exe"));
+		InputStream input = (mainClass.class.getResourceAsStream("/chromedriver.exe"));
   	     try {
 				Files.copy(input, chromeDriver.toPath());
 				input.close();

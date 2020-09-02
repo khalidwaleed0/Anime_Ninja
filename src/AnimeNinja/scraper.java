@@ -33,7 +33,7 @@ public class scraper {
 
 	protected static void setup()
 	{
-		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver85.exe");
+		System.setProperty("webdriver.chrome.driver", System.getenv("SystemDrive")+"\\Program Files\\Anime Ninja\\chromedriver.exe");
 		ChromeOptions chromeOptions = new ChromeOptions();
 		HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 		chromePrefs.put("profile.default_content_settings.popups", 0);
