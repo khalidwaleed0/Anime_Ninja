@@ -9,7 +9,7 @@
 ### How to install :
 ####  Easy Way :
  * Download the exe or jar file from here [Anime Ninja](https://github.com/khalidwaleed0/Anime_Ninja/releases)
- * When you download the exe file there is no installation needed.
+ * Follow the instructions provided by the program.
 ####  Hard Way :
  * If you want to run the code on your IDE or make your own jar file, you should :
    * Put chromedriver.exe in the resources.
