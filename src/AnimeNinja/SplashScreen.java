@@ -87,7 +87,7 @@ public class SplashScreen {
 		JPanel contentPanel = new JPanel();
 		JTextField dirTextField;
 		dialog.setTitle("Anime Ninja");
-		dialog.setSize(500, 134);
+		dialog.setSize(515, 134);
 		dialog.setLocationRelativeTo(null);
 		dialog.getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

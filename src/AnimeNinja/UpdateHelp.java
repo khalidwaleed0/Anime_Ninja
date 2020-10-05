@@ -25,7 +25,7 @@ public class UpdateHelp extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(UpdateHelp.class.getResource("/resources/appIcon.png")));
 		setTitle("Anime Ninja - Update Help");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(560, 444);
+		setSize(575, 444);
 		setAlwaysOnTop(true);
 		setLocationRelativeTo(null);
 		UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
