@@ -8,15 +8,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class AppSetup {
-    public boolean setup()
-    {
-        checkInstallationDirectory();
-        if(!(checkChromeInstallation() && checkChromeDriver()))
-            return false;
-        else
-            return true;
 
-    }
     public boolean checkChromeInstallation()
     {
         for(int i=0 ; i<OsDetector.chromePaths.size() ; i++)
@@ -34,9 +26,8 @@ public class AppSetup {
         }
         return false;
     }
-    private void checkInstallationDirectory()
+    public void checkInstallationDirectory()
     {
-        File chromeDriver = new File(OsDetector.installationDirectory +File.separator+OsDetector.driverName);
         if(!OsDetector.installationDirectory.exists())
             OsDetector.installationDirectory.mkdir();
     }

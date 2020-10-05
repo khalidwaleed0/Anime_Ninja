@@ -26,7 +26,7 @@ public class Updater {
 	{
 		Document doc = Jsoup.connect("https://github.com/khalidwaleed0/Anime_Ninja/releases").get();
 		Element latestReleaseName = doc.selectFirst(".f1.flex-auto.min-width-0.text-normal a");
-		if(!latestReleaseName.text().equals("v1.2.0"))
+		if(!latestReleaseName.text().equals("v2.0.1"))
 		{
 			showUpdateWindow();
 			String whatsNew = doc.selectFirst(".markdown-body p").wholeText();
@@ -70,7 +70,7 @@ public class Updater {
 		dialog.setTitle("New Update");
 		dialog.setAlwaysOnTop(true);
 		dialog.setVisible(true);
-		dialog.setBounds(100, 100, 450, 151);
+		dialog.setBounds(100, 100, 470, 151);
 		dialog.getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		dialog.getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -83,7 +83,7 @@ public class Updater {
 		contentPanel.add(lblDownloadInfo);
 		
 		JLabel lblTheNewVersion = new JLabel("The new Version will be on desktop and will open automatically");
-		lblTheNewVersion.setBounds(10, 87, 430, 14);
+		lblTheNewVersion.setBounds(10, 87, 450, 14);
 		contentPanel.add(lblTheNewVersion);
 	}
 

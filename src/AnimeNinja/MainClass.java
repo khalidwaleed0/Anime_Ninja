@@ -15,6 +15,7 @@ public class MainClass {
 		OsDetector.detectAndSetup();
 		checkUpdates();
 		AppSetup appSetup = new AppSetup();
+		appSetup.checkInstallationDirectory();
 		if(appSetup.checkChromeInstallation() == false)
 			System.exit(0);
 		if(appSetup.checkChromeDriver() == false)

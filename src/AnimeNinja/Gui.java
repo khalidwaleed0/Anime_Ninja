@@ -138,7 +138,7 @@ public class Gui extends JFrame {
         UIManager.put("Button.focus", new ColorUIResource(new Color(0, 0, 0, 0)));
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/appIcon.png")));
         setBackground(Color.DARK_GRAY);
-        setTitle("Anime Ninja v1.3.0");
+        setTitle("Anime Ninja v2.0.1");
         setResizable(false);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener((WindowListener) new WindowAdapter()
