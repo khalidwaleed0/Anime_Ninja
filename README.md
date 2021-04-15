@@ -1,6 +1,8 @@
 # Anime_Ninja
  A program to download 1080p anime episodes with one click(with arabic subtitles).<br/>
  supports Linux and Windows.
+ <br>
+ ### Deprecated (as the website owner now gets the decoded url from an external source)
  <br><br>
  ![screenshot](https://user-images.githubusercontent.com/54943086/78883666-166b5680-7a5a-11ea-8e03-78b3e9cb4195.png)
 ### Requirements :
