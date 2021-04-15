@@ -3,6 +3,22 @@
  supports Linux and Windows.
  <br>
  ### Deprecated (as the website owner now gets the decoded url from an external source)
+ ### Alternative Solution :
+ 1- Add ublock origin extension to your browser(firefox is preferred).
+ <br>
+ 2- Open the dashboard in the extension and go to "My Filters".
+ <br>
+ 3- Add these lines and press "Apply Changes".
+  ```
+pr.animesanka.club##^script:has-text(window.location.replace)
+prwd.animesanka.club##^script:has-text(window.location.replace)
+||www.gstatic.com/firebasejs/7.10.0/firebase-app.js$script,domain=pr.animesanka.club|prwd.animesanka.club
+||pr.animesanka.club/p/blog-page_15.html$document,domain=pr.animesanka.club
+||www.gstatic.com/firebasejs/7.10.0/firebase-analytics.js$script,domain=prwd.animesanka.club
+||prwd.animesanka.club/p/blog-page_15.html$document,domain=prwd.animesanka.club
+
+  ```
+ 4- Now you can browse the premium version of AnimeSanka for free [AnimeSanka](https://pr.animesanka.club/)
  <br><br>
  ![screenshot](https://user-images.githubusercontent.com/54943086/78883666-166b5680-7a5a-11ea-8e03-78b3e9cb4195.png)
 ### Requirements :
