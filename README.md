@@ -2,7 +2,7 @@
  A program to download 1080p anime episodes with one click(with arabic subtitles).<br/>
  supports Linux and Windows.
  <br>
- ### Deprecated (as the website owner now gets the decoded url from an external source)
+ ### Program is Deprecated (as the website owner now gets the decoded url from an external source)
  ### Alternative Solution :
  1- Add ublock origin extension to your browser(firefox is preferred).
  <br>
