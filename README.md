@@ -4,7 +4,7 @@
  <br>
  ### Program is Deprecated (as the website owner now gets the decoded url from an external source)
  ### Alternative Solution :
- 1- Add ublock origin extension to your browser(firefox is preferred).
+ 1- Add ublock origin extension to your browser(firefox is a must).
  <br>
  2- Open the dashboard in the extension and go to "My Filters".
  <br>
